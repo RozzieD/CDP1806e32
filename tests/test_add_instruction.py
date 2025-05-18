@@ -1,28 +1,24 @@
-# tests/test_add_instruction.py
-
 import unittest
-from irq_emulator_hook import MockMemory
-from cdp1806e32_emulator import CPU
+from emulator.irq_emulator_hook import MockMemory
+from emulator.cdp1806e32_emulator import CPU
 
 class TestAddInstruction(unittest.TestCase):
     def setUp(self):
         self.mem = MockMemory()
         self.cpu = CPU(self.mem)
-        self.cpu.pc = 0x100  # place test instruction in safe memory
+        self.cpu.pc = 0x0100
 
-    def test_add_r1_equals_r2_plus_r3(self):
-        # Set register values
-        self.cpu.regs[2] = 5
-        self.cpu.regs[3] = 7
+    def test_add_r2_equals_r3_plus_r0(self):
+        self.cpu.regs[3] = 7  # rs = R3
+        self.cpu.regs[0] = 5  # rt = R0
 
-        # Encode ADD r1 = r2 + r3
-        # opcode=0x1 (ADD), rd=1, rs=2, imm4=3 => 0x1230
-        self.mem.write16(0x100, 0x1230)
+        # opcode=1 (ADD), rd=2, rs=3, rt=0 => 0001 0010 0011 0000 = 0x1230
+        self.mem.write16(0x0100, 0x1230)
 
         self.cpu.step()
 
-        self.assertEqual(self.cpu.regs[1], 12)
-        self.assertEqual(self.cpu.pc, 0x102)
+        self.assertEqual(self.cpu.regs[2], 12)
+        self.assertEqual(self.cpu.pc, 0x0102)
 
 if __name__ == '__main__':
     unittest.main()
