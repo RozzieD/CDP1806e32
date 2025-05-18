@@ -1,0 +1,26 @@
+Usage Guide
+===========
+
+This guide explains how to build, run, and test the CDP1806E-R32 system.
+
+Building Firmware
+-----------------
+
+.. code-block:: bash
+
+   make
+
+Running the Emulator
+--------------------
+
+.. code-block:: bash
+
+   python3 cdp1806e32_emulator.py
+
+Running Unit Tests
+------------------
+
+.. code-block:: bash
+
+   cd tests
+   python3 -m unittest discover

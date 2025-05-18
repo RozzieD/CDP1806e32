@@ -1,0 +1,23 @@
+.. CDP1806E-R32 documentation master file
+
+CDP1806E-R32 Toolchain
+=======================
+
+A RISC-style softcore CPU inspired by the RCA CDP1802, modernized for FPGA and emulation.
+
+Contents:
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Documentation
+
+   usage
+   api_reference
+   isa
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

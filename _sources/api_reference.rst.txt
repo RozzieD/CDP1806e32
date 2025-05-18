@@ -1,0 +1,14 @@
+API Reference
+=============
+
+Memory Model
+------------
+
+.. automodule:: irq_emulator_hook
+   :members:
+
+CPU Emulator
+------------
+
+.. automodule:: cdp1806e32_emulator
+   :members:
