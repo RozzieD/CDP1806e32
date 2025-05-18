@@ -1,3 +1,22 @@
 [build-system]
-requires = ["setuptools"]
-...
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cdp1806e32"
+version = "0.1.0"
+description = "CDP1806E-R32: A modern 16/32-bit RISC CPU toolchain and emulator"
+authors = [
+  { name = "RozzieD", email = "you@example.com" }
+]
+license = { file = "LICENSE" }
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = []
+
+[project.urls]
+"Homepage" = "https://github.com/RozzieD/cdp1806e32"
+"Documentation" = "https://RozzieD.github.io/cdp1806e32/"
+
+[tool.setuptools.packages.find]
+where = ["."]

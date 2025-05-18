@@ -1,25 +1,28 @@
-class MockMemory:
-    def __init__(self, size=0x10000):
-        self.data = bytearray(size)
+# emulator/irq_emulator_hook.py
 
-    def read8(self, addr):
-        return self.data[addr & 0xFFFF]
+class MockMemory:
+    def __init__(self):
+        self.mem = {}
 
     def read16(self, addr):
-        hi = self.read8(addr)
-        lo = self.read8(addr + 1)
+        hi = self.mem.get(addr, 0)
+        lo = self.mem.get(addr + 1, 0)
         return (hi << 8) | lo
 
-    def read32(self, addr):
-        return (self.read16(addr) << 16) | self.read16(addr + 2)
-
-    def write8(self, addr, value):
-        self.data[addr & 0xFFFF] = value & 0xFF
-
     def write16(self, addr, value):
-        self.write8(addr, (value >> 8) & 0xFF)
-        self.write8(addr + 1, value & 0xFF)
+        self.mem[addr] = (value >> 8) & 0xFF
+        self.mem[addr + 1] = value & 0xFF
+
+    def read32(self, addr):
+        return (
+            (self.mem.get(addr, 0) << 24) |
+            (self.mem.get(addr + 1, 0) << 16) |
+            (self.mem.get(addr + 2, 0) << 8) |
+            self.mem.get(addr + 3, 0)
+        )
 
     def write32(self, addr, value):
-        self.write16(addr, (value >> 16) & 0xFFFF)
-        self.write16(addr + 2, value & 0xFFFF)
+        self.mem[addr] = (value >> 24) & 0xFF
+        self.mem[addr + 1] = (value >> 16) & 0xFF
+        self.mem[addr + 2] = (value >> 8) & 0xFF
+        self.mem[addr + 3] = value & 0xFF
