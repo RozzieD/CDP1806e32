@@ -52,8 +52,8 @@
 <tbody>
 <tr class="row-even"><td><p>Load Immediate</p></td>
 <td><p>LDI (F8)</p></td>
-<td><p>LI rd, imm8 → 0x8Rii</p></td>
-<td><p>Load 8-bit constant into register</p></td>
+<td><p>LDI rd, imm16 → 0x93R + 16-bit immediate</p></td>
+<td><p>Load 16-bit constant into register</p></td>
 </tr>
 <tr class="row-odd"><td><p>Register Move</p></td>
 <td></td>
@@ -130,47 +130,52 @@
 <td><p>CMP rd, rs → 0xDRS0</p></td>
 <td><p>Sets condition flags</p></td>
 </tr>
-<tr class="row-even"><td><p>Call/Return</p></td>
+<tr class="row-even"><td><p>Stack Ops</p></td>
+<td></td>
+<td><p>PUSH Rn → 0xB0Rn | POP Rn → 0xB1Rn</p></td>
+<td><p>Stack manipulation via SP (R9)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Call/Return</p></td>
 <td><p>SCAL, SEP Rn / SRET</p></td>
-<td><p>CALL rd → 0xA000, RET → 0xF000</p></td>
+<td><p>CALL → 0xC000 (Jumps to R10, pushes PC), RET → 0xF000 (Pops PC)</p></td>
 <td><p>Call and return</p></td>
 </tr>
-<tr class="row-odd"><td><p>Trap/Break</p></td>
+<tr class="row-even"><td><p>Trap/Break</p></td>
 <td><p>DIS, IDLE</p></td>
 <td><p>TRAP → 0xE000</p></td>
 <td><p>System halt or software interrupt</p></td>
 </tr>
-<tr class="row-even"><td><p>Control: CSR Access</p></td>
+<tr class="row-odd"><td><p>Control: CSR Access</p></td>
 <td></td>
 <td><p>CSRR rd, csr → 0xE1RC | CSRW csr, rs → 0xE2RC</p></td>
 <td><p>Read/write system registers</p></td>
 </tr>
-<tr class="row-odd"><td><p>I/O: Output</p></td>
+<tr class="row-even"><td><p>I/O: Output</p></td>
 <td><p>OUT n (3n)</p></td>
 <td><p>OUT port, reg → 0xE3RP</p></td>
 <td><p>MMIO output</p></td>
 </tr>
-<tr class="row-even"><td><p>I/O: Input</p></td>
+<tr class="row-odd"><td><p>I/O: Input</p></td>
 <td><p>INP n (4n)</p></td>
 <td><p>IN reg, port → 0xE4RP</p></td>
 <td><p>MMIO input</p></td>
 </tr>
-<tr class="row-odd"><td><p>Skip Instructions</p></td>
+<tr class="row-even"><td><p>Skip Instructions</p></td>
 <td><p>SKP / LSK / LSN</p></td>
 <td><p>N/A</p></td>
 <td><p>May be implemented with conditional branches</p></td>
 </tr>
-<tr class="row-even"><td><p>NOP</p></td>
+<tr class="row-odd"><td><p>NOP</p></td>
 <td><p>NOP (00)</p></td>
 <td><p>NOP → 0x0000</p></td>
 <td><p>No operation</p></td>
 </tr>
-<tr class="row-odd"><td><p>Multiply / Divide</p></td>
+<tr class="row-even"><td><p>Multiply / Divide</p></td>
 <td></td>
-<td><p>MUL rd, rs, rt → 0xA1RST | DIV → 0xA2RST</p></td>
+<td><p>MUL rd, rs, rt → 0xA??? | DIV → 0xB2RST</p></td>
 <td><p>Optional extended ALU</p></td>
 </tr>
-<tr class="row-even"><td><p>Memory Extended</p></td>
+<tr class="row-odd"><td><p>Memory Extended</p></td>
 <td></td>
 <td><p>LDI rd, imm16 → 0x93RR + 16-bit ext</p></td>
 <td><p>Extended load with prefix</p></td>

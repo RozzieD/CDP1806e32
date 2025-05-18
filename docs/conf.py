@@ -5,6 +5,7 @@ import sys
 
 # ✅ Ensure Python can find emulator modules in the parent directory
 sys.path.insert(0, os.path.abspath(".."))
+sys.path.insert(0, os.path.abspath('../emulator'))
 
 project = 'CDP1806E-R32'
 author = 'RozzieD'

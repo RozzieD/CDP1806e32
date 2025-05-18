@@ -16,6 +16,19 @@ class CPU:
         instr = self.fetch()
         print(f"PC={self.pc:04X} INSTR={instr:04X}")
 
+        # Legacy 8-bit compatibility decode (if instruction is 0xFFxx)
+        if (instr >> 8) == 0xFF:
+            legacy_opcode = instr & 0xFF
+            print(f"[Legacy Decode] 8-bit opcode: {legacy_opcode:02X}")
+            # Example legacy instruction: LDI (0xF8) → load imm8 into R0
+            if legacy_opcode == 0xF8:
+                imm = self.fetch() & 0xFF  # Read next word, use low byte
+                self.regs[0] = imm
+                print(f"[Legacy] LDI R0, #{imm}")
+            else:
+                raise Exception(f"Unknown legacy opcode: {legacy_opcode:02X}")
+            return # ✅ Only return after legacy decoding
+
         # Check for LDI imm16 format
         if (instr >> 8) == 0x93:
             reg = instr & 0xF
