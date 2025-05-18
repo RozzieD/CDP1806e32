@@ -65,24 +65,28 @@ class CPU:
 
         elif opcode == 0xB:
             subop = (instr >> 8) & 0xFF
+
             if subop == 0xB0:  # PUSH
                 reg = instr & 0xF
                 print(f"PUSH: R{reg} = {self.regs[reg]} --> [SP={self.regs[9]:04X}]")
                 self.regs[9] = (self.regs[9] - 4) & 0xFFFF
                 self.mem.write32(self.regs[9], self.regs[reg])
+
             elif subop == 0xB1:  # POP
                 reg = instr & 0xF
                 val = self.mem.read32(self.regs[9])
                 print(f"POP: [SP={self.regs[9]:04X}] --> R{reg} = {self.regs[reg]}")
                 self.regs[reg] = val
                 self.regs[9] = (self.regs[9] + 4) & 0xFFFF
-            elif subop == 0xB2:  # DIV
-                rd = (instr >> 8) & 0xF
+
+            elif (subop & 0xF0) == 0xB0:  # DIV
+                rd = subop & 0x0F
                 rs = (instr >> 4) & 0xF
                 rt = instr & 0xF
                 if self.regs[rt] == 0:
                     raise ZeroDivisionError("DIV by zero")
                 self.regs[rd] = (self.regs[rs] // self.regs[rt]) & 0xFFFFFFFF
+
             else:
                 raise Exception(f"Unknown 0xB subop: {subop:02X}")
 
