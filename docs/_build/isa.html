@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>CDP1806 vs CDP1806E-R32 Opcode Map (Extended) &#8212; CDP1806E-R32 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=01f34227"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="API Reference" href="api_reference.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="cdp1806-vs-cdp1806e-r32-opcode-map-extended">
+<h1>CDP1806 vs CDP1806E-R32 Opcode Map (Extended)<a class="headerlink" href="#cdp1806-vs-cdp1806e-r32-opcode-map-extended" title="Link to this heading">¶</a></h1>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text">Instruction Set Comparison</span><a class="headerlink" href="#id1" title="Link to this table">¶</a></caption>
+<colgroup>
+<col style="width: 17.6%" />
+<col style="width: 23.5%" />
+<col style="width: 23.5%" />
+<col style="width: 35.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Functional Group</p></th>
+<th class="head"><p>CDP1806 Mnemonic &amp; Opcode (Hex)</p></th>
+<th class="head"><p>CDP1806E-R32 Mnemonic &amp; Encoding</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Load Immediate</p></td>
+<td><p>LDI (F8)</p></td>
+<td><p>LI rd, imm8 → 0x8Rii</p></td>
+<td><p>Load 8-bit constant into register</p></td>
+</tr>
+<tr class="row-odd"><td><p>Register Move</p></td>
+<td></td>
+<td><p>MOV rd, rs → 0x3RS0</p></td>
+<td><p>Copy register (RISC-style)</p></td>
+</tr>
+<tr class="row-even"><td><p>Get/Put Byte</p></td>
+<td><p>GHI Rn / PLO Rn (9n / An)</p></td>
+<td><p>N/A</p></td>
+<td><p>Replaced by full 32-bit registers</p></td>
+</tr>
+<tr class="row-odd"><td><p>Arithmetic: ADD</p></td>
+<td><p>INC Rn (1n)</p></td>
+<td><p>ADD rd, rs, rt → 0x1RST</p></td>
+<td><p>Replaces INC/DEC with 3-op ADD</p></td>
+</tr>
+<tr class="row-even"><td><p>Arithmetic: SUB</p></td>
+<td><p>DEC Rn (2n)</p></td>
+<td><p>SUB rd, rs, rt → 0x2RST</p></td>
+<td><p>Full subtraction</p></td>
+</tr>
+<tr class="row-odd"><td><p>Arithmetic: ADDI</p></td>
+<td><p>ADI (C1)</p></td>
+<td><p>ADDI rd, imm → 0x91RI</p></td>
+<td><p>Immediate addition</p></td>
+</tr>
+<tr class="row-even"><td><p>Arithmetic: SUBI</p></td>
+<td><p>SDI (C2)</p></td>
+<td><p>SUBI rd, imm → 0x92RI</p></td>
+<td><p>Immediate subtraction</p></td>
+</tr>
+<tr class="row-odd"><td><p>Logic: AND</p></td>
+<td><p>AND (C4)</p></td>
+<td><p>AND rd, rs, rt → 0x4RST</p></td>
+<td><p>Logical AND</p></td>
+</tr>
+<tr class="row-even"><td><p>Logic: OR</p></td>
+<td><p>OR (C5)</p></td>
+<td><p>OR rd, rs, rt → 0x5RST</p></td>
+<td><p>Logical OR</p></td>
+</tr>
+<tr class="row-odd"><td><p>Logic: XOR</p></td>
+<td><p>XOR (C6)</p></td>
+<td><p>XOR rd, rs, rt → 0x6RST</p></td>
+<td><p>Logical XOR</p></td>
+</tr>
+<tr class="row-even"><td><p>Logic: NOT / NEG</p></td>
+<td></td>
+<td><p>NEG rd → 0xB000 | NOT rd → 0xB010</p></td>
+<td><p>Unary logic operations</p></td>
+</tr>
+<tr class="row-odd"><td><p>Shift/Rotate</p></td>
+<td><p>SHL / SHR / ROL / ROR</p></td>
+<td><p>SHL rd → 0xC010 | SHR rd → 0xC011</p></td>
+<td><p>Shift/rotate operations</p></td>
+</tr>
+<tr class="row-even"><td><p>Memory: Load</p></td>
+<td><p>LDR Rn (6n)</p></td>
+<td><p>LD rd, [rs+imm4] → 0x7RST</p></td>
+<td><p>Register indirect load</p></td>
+</tr>
+<tr class="row-odd"><td><p>Memory: Store</p></td>
+<td><p>STR Rn (7n)</p></td>
+<td><p>ST [rs+imm4], rd → 0x8RST</p></td>
+<td><p>Register indirect store</p></td>
+</tr>
+<tr class="row-even"><td><p>Branch</p></td>
+<td><p>BR, BZ, BNZ, BDF, BNF, BQ, BNQ</p></td>
+<td><p>BEQ, BNE, BGT, BLT, BGE, BLE → 0xD0CC</p></td>
+<td><p>Expanded conditional branches</p></td>
+</tr>
+<tr class="row-odd"><td><p>Compare</p></td>
+<td></td>
+<td><p>CMP rd, rs → 0xDRS0</p></td>
+<td><p>Sets condition flags</p></td>
+</tr>
+<tr class="row-even"><td><p>Call/Return</p></td>
+<td><p>SCAL, SEP Rn / SRET</p></td>
+<td><p>CALL rd → 0xA000, RET → 0xF000</p></td>
+<td><p>Call and return</p></td>
+</tr>
+<tr class="row-odd"><td><p>Trap/Break</p></td>
+<td><p>DIS, IDLE</p></td>
+<td><p>TRAP → 0xE000</p></td>
+<td><p>System halt or software interrupt</p></td>
+</tr>
+<tr class="row-even"><td><p>Control: CSR Access</p></td>
+<td></td>
+<td><p>CSRR rd, csr → 0xE1RC | CSRW csr, rs → 0xE2RC</p></td>
+<td><p>Read/write system registers</p></td>
+</tr>
+<tr class="row-odd"><td><p>I/O: Output</p></td>
+<td><p>OUT n (3n)</p></td>
+<td><p>OUT port, reg → 0xE3RP</p></td>
+<td><p>MMIO output</p></td>
+</tr>
+<tr class="row-even"><td><p>I/O: Input</p></td>
+<td><p>INP n (4n)</p></td>
+<td><p>IN reg, port → 0xE4RP</p></td>
+<td><p>MMIO input</p></td>
+</tr>
+<tr class="row-odd"><td><p>Skip Instructions</p></td>
+<td><p>SKP / LSK / LSN</p></td>
+<td><p>N/A</p></td>
+<td><p>May be implemented with conditional branches</p></td>
+</tr>
+<tr class="row-even"><td><p>NOP</p></td>
+<td><p>NOP (00)</p></td>
+<td><p>NOP → 0x0000</p></td>
+<td><p>No operation</p></td>
+</tr>
+<tr class="row-odd"><td><p>Multiply / Divide</p></td>
+<td></td>
+<td><p>MUL rd, rs, rt → 0xA1RST | DIV → 0xA2RST</p></td>
+<td><p>Optional extended ALU</p></td>
+</tr>
+<tr class="row-even"><td><p>Memory Extended</p></td>
+<td></td>
+<td><p>LDI rd, imm16 → 0x93RR + 16-bit ext</p></td>
+<td><p>Extended load with prefix</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">CDP1806E-R32</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">CDP1806 vs CDP1806E-R32 Opcode Map (Extended)</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="api_reference.html" title="previous chapter">API Reference</a></li>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.2.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/isa.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

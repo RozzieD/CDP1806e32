@@ -1,2 +1,3 @@
+# requirements.txt - CDP1806E-R32 Python tools
 pytest
 sphinx
